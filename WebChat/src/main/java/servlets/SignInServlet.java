@@ -5,6 +5,8 @@ import base.DBService;
 import base.Frontend;
 import exception.webException.GetUserException;
 import exception.webException.ValidationUserException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import sessions.WebContext;
 import templater.PageGenerator;
 
@@ -18,6 +20,8 @@ import java.util.Map;
 
 
 public class SignInServlet extends HttpServlet implements Frontend {
+    static private final Logger LOGGER = LogManager.getLogger(SignInServlet.class.getName());
+    public static final String PAGE_URL = "/signin";
     private final DBService dbService;
     private final Account accountService;
 
@@ -37,6 +41,8 @@ public class SignInServlet extends HttpServlet implements Frontend {
         String pass = request.getParameter("password");
         String message = null;
 
+        LOGGER.info("Name: {}", login);
+
         if (!isEnterValid(login, pass)) {
             putAnswerInformation(UNAUTHORIZED, response);
             message = "Unauthorized";
@@ -46,6 +52,7 @@ public class SignInServlet extends HttpServlet implements Frontend {
                 if (loginUser(dbService, login, pass, accountService, request) != null) {
                     putAnswerInformation(OK, response);
                     message = "Authorized: " + login;
+                    LOGGER.info("User: {} success!", login);
                 }
             } catch (ValidationUserException e) {
                 putAnswerInformation(BAD_REQUEST, response);

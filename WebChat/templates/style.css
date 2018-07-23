@@ -67,11 +67,17 @@
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     background-color: #cccce4;
-    color: #e22c2c;
+    
 }
 
-.message p {
+.success p {
     text-align: center;
+    color: #46a85c;
+}
+
+.failed p {
+    text-align: center;
+    color: #ea2214;
 }
 
 body {
@@ -81,4 +87,26 @@ body {
 * {
     font-family:arial;
     font-size:10pt;
+}
+
+.container {
+  width: 100%;
+  max-width: 1024px; /*максимальная ширина может иметь другое значение*/
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+.logo {
+  float: left;
+}
+nav {
+  float: right;
+}
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+nav li {
+  display: inline-block; /*один из способов разместить элементы в строку*/
 }

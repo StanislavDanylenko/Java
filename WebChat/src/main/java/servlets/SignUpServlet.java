@@ -6,6 +6,8 @@ import base.Frontend;
 import exception.webException.SuchUserAlreadyExistException;
 import exception.webException.UserException;
 import exception.webException.GetUserException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import sessions.WebContext;
 import templater.PageGenerator;
 
@@ -18,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SignUpServlet extends HttpServlet implements Frontend {
+    static private final Logger LOGGER = LogManager.getLogger(SignUpServlet.class.getName());
+    public static final String PAGE_URL = "/signup";
     private final DBService dbService;
     private final Account accountService;
 
@@ -35,7 +39,11 @@ public class SignUpServlet extends HttpServlet implements Frontend {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
         String pass = request.getParameter("password");
+
+        LOGGER.info("Connected user name: {}", login);
+
         String message = null;
+        Map<String, Object> pageVariables = new HashMap<>();
 
         if (!isEnterValid(login, pass)) {
             putAnswerInformation(BAD_REQUEST, response);
@@ -46,6 +54,10 @@ public class SignUpServlet extends HttpServlet implements Frontend {
                 if (registerNewUser(dbService, login, pass) != null) {
                     putAnswerInformation(CREATED, response);
                     message = "registered";
+                    LOGGER.info("User: {} success!", login);
+                    pageVariables.put("message", message);
+                    response.getWriter().println(PageGenerator.instance().getPage("register_template_successed.html", pageVariables));
+                    return;
                 }
             } catch (SuchUserAlreadyExistException e) {
                 putAnswerInformation(BAD_REQUEST, response);
@@ -58,8 +70,9 @@ public class SignUpServlet extends HttpServlet implements Frontend {
                 message = "registration error";
             }
         }
-        Map<String, Object> pageVariables = new HashMap<>();
+
+        LOGGER.info("User: {} fail!", login);
         pageVariables.put("message", message == null ? "" : message);
-        response.getWriter().println(PageGenerator.instance().getPage("register_template.html", pageVariables));
+        response.getWriter().println(PageGenerator.instance().getPage("register_template_failed.html", pageVariables));
     }
 }

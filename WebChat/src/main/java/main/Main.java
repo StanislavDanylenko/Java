@@ -4,6 +4,8 @@ import base.Account;
 import base.Context;
 import base.DBService;
 import dbService.DBServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
@@ -17,7 +19,19 @@ import sessions.WebContext;
 
 public class Main {
 
+    private static final Logger LOGGER = LogManager.getLogger(Main.class.getName());
+
     public static void main(String[] args) throws Exception {
+
+        if (args.length != 1) {
+            LOGGER.error("Use port as the first argument");
+            System.exit(1);
+        }
+        String portString = args[0];
+        int port = Integer.valueOf(portString);
+
+        LOGGER.info("Starting at http://127.0.0.1:" + portString);
+
         DBService dbService = new DBServiceImpl();
         Account accountService = new AccountService();
 
@@ -43,13 +57,14 @@ public class Main {
         HandlerList handlers = new HandlerList();
         handlers.setHandlers(new Handler[]{resource_handler, context});
 
-        Server server = new Server(8080);
+        Server server = new Server(port);
 
         server.setHandler(handlers);
-        context.addServlet(new ServletHolder(signInServlet), "/signin");
-        context.addServlet(new ServletHolder(signUpServlet), "/signup");
+        context.addServlet(new ServletHolder(signInServlet), SignInServlet.PAGE_URL);
+        context.addServlet(new ServletHolder(signUpServlet), SignUpServlet.PAGE_URL);
 
         server.start();
+        LOGGER.info("Server started");
         System.out.println("Server started");
         server.join();
     }
