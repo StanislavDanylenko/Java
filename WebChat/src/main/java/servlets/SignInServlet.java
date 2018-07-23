@@ -3,12 +3,10 @@ package servlets;
 import base.Account;
 import base.DBService;
 import base.Frontend;
-import exception.DBException;
-import dbService.dataSets.UsersDataSet;
 import exception.webException.GetUserException;
-import exception.webException.UserException;
 import exception.webException.ValidationUserException;
 import sessions.WebContext;
+import templater.PageGenerator;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,8 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import templater.PageGenerator;
 
 
 public class SignInServlet extends HttpServlet implements Frontend {

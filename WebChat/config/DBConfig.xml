@@ -1,0 +1,9 @@
+<class name="resources.H2Configuration">
+    <dialect>org.hibernate.dialect.H2Dialect</dialect>
+    <connectionDriverClass>org.h2.Driver</connectionDriverClass>
+    <connectionURL>jdbc:h2:./h2db</connectionURL>
+    <connectionUsername>test</connectionUsername>
+    <connectionPassword>test</connectionPassword>
+    <showSql>true</showSql>
+    <hbm2ddlAuto>create</hbm2ddlAuto>
+</class>

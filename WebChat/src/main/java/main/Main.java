@@ -5,21 +5,26 @@ import base.Context;
 import base.DBService;
 import dbService.DBServiceImpl;
 import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 import servlets.SignInServlet;
 import servlets.SignUpServlet;
 import sessions.AccountService;
 import sessions.WebContext;
-import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
         DBService dbService = new DBServiceImpl();
         Account accountService = new AccountService();
+
+        /*ResourceProviderImpl resourceProvider = new ResourceProviderImpl();
+        resourceProvider.loadResources();
+        H2Configuration cfg = resourceProvider.getResource(H2Configuration.class);
+        System.out.println(cfg);*/
 
         Context webContext = new WebContext();
         webContext.add(DBService.class, dbService);
