@@ -53,6 +53,8 @@ public class SignInServlet extends HttpServlet implements Frontend {
                     putAnswerInformation(OK, response);
                     message = "Authorized: " + login;
                     LOGGER.info("User: {} success!", login);
+                    request.getSession().setAttribute("login", login);
+                    request.getRequestDispatcher("/chat").forward(request,response);
                 }
             } catch (ValidationUserException e) {
                 putAnswerInformation(BAD_REQUEST, response);
