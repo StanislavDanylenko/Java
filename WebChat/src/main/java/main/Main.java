@@ -4,6 +4,9 @@ import base.Account;
 import base.Context;
 import base.DBService;
 import dbService.DBServiceImpl;
+import org.eclipse.jetty.server.Handler;
+import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 import servlets.SignInServlet;
 import servlets.SignUpServlet;
 import sessions.AccountService;
@@ -27,9 +30,17 @@ public class Main {
         SignInServlet signInServlet = new SignInServlet((WebContext) webContext);
         SignUpServlet signUpServlet = new SignUpServlet((WebContext) webContext);
 
-        Server server = new Server(8080);
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-        server.setHandler(context);
+
+        ResourceHandler resource_handler = new ResourceHandler();
+        resource_handler.setResourceBase("static_html");
+
+        HandlerList handlers = new HandlerList();
+        handlers.setHandlers(new Handler[]{resource_handler, context});
+
+        Server server = new Server(8080);
+
+        server.setHandler(handlers);
         context.addServlet(new ServletHolder(signInServlet), "/signin");
         context.addServlet(new ServletHolder(signUpServlet), "/signup");
 
