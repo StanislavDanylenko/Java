@@ -15,6 +15,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import templater.PageGenerator;
 
 
 public class SignInServlet extends HttpServlet implements Frontend {
@@ -35,26 +39,30 @@ public class SignInServlet extends HttpServlet implements Frontend {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String login = request.getParameter("login");
         String pass = request.getParameter("password");
+        String message = null;
 
         if (!isEnterValid(login, pass)) {
             putAnswerInformation(UNAUTHORIZED, response);
-            response.getWriter().println("Unauthorized");
-            return;
-        }
+            message = "Unauthorized";
+        } else {
 
-        try {
-            if (loginUser(dbService, login, pass, accountService, request) != null) {
-                putAnswerInformation(OK, response);
-                response.getWriter().println("Authorized: " + login);
+            try {
+                if (loginUser(dbService, login, pass, accountService, request) != null) {
+                    putAnswerInformation(OK, response);
+                    message = "Authorized: " + login;
+                }
+            } catch (ValidationUserException e) {
+                putAnswerInformation(BAD_REQUEST, response);
+                message = e.getMessage();
+            } catch (GetUserException e) {
+                putAnswerInformation(BAD_REQUEST, response);
+                message = "invalid data";
             }
-        } catch (ValidationUserException e) {
-            putAnswerInformation(BAD_REQUEST, response);
-            response.getWriter().println(e.getMessage());
-        } catch (GetUserException e) {
-            putAnswerInformation(BAD_REQUEST, response);
-            response.getWriter().println("invalid data");
         }
 
+        Map<String, Object> pageVariables = new HashMap<>();
+        pageVariables.put("message", message == null ? "" : message);
+        response.getWriter().println(PageGenerator.instance().getPage("login_template.html", pageVariables));
     }
 
 }

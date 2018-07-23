@@ -60,9 +60,9 @@
     border-radius: 20px;
     width: auto;
     margin: 5px;
-    min-width: 270px;
+    min-width: 260px;
     padding: 5px;
-    position: fixed; top: 66%; left: 49%;
+    position: fixed; top: 65%; left: 49.7%;
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
