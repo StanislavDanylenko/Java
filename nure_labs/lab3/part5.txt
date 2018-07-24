@@ -1,0 +1,6 @@
+Login;Name;Email
+ivanov;Ivan Ivanov;ivanov@mail.ru
+petrov;Petr Petrov;petrov@google.com
+обама;Барак Обама;obama@google.com
+bush;George Bush;bush@mail.ru
+maryin;Sergey Maruin;s.a.maryin@nure.ua
