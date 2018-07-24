@@ -12,10 +12,7 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
-import servlets.ChatServlet;
-import servlets.SignInServlet;
-import servlets.SignUpServlet;
-import servlets.WebSocketChatServlet;
+import servlets.*;
 import sessions.AccountManagerService;
 import sessions.WebContext;
 
@@ -62,6 +59,7 @@ public class Main {
         context.addServlet(new ServletHolder(signUpServlet), SignUpServlet.PAGE_URL);
         context.addServlet(new ServletHolder(new ChatServlet(accountManagerService)), ChatServlet.PAGE_URL);
         context.addServlet(new ServletHolder(new WebSocketChatServlet(accountManagerService)), WebSocketChatServlet.PAGE_URL);
+        context.addServlet(new ServletHolder(new LogoutServlet(accountManagerService)), LogoutServlet.PAGE_URL);
 
         HandlerList handlers = new HandlerList();
         handlers.setHandlers(new Handler[]{resource_handler, context});

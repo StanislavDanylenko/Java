@@ -35,7 +35,8 @@ public class SignInServlet extends HttpServlet implements Frontend {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        if (!session.isNew() && accountManagerService.getHttpSessoinList().contains(session)) {
+        String login = request.getParameter("login");
+        if (!session.isNew() && accountManagerService.getHttpSessoinList().contains(session) && accountManagerService.getSocketSession(login) == null) {
             request.getRequestDispatcher("/chat").forward(request, response);
         } else {
             LOGGER.error("No such session registered!");
@@ -59,7 +60,6 @@ public class SignInServlet extends HttpServlet implements Frontend {
             try {
                 if (loginUser(dbService, login, pass, accountManagerService, request) != null) {
                     putAnswerInformation(OK, response);
-                   /* message = "Authorized: " + login;*/
                     LOGGER.info("User: {} authorized!", login);
                     request.getSession().setAttribute("login", login);
                     request.getRequestDispatcher("/chat").forward(request, response);

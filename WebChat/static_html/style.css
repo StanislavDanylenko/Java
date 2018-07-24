@@ -83,7 +83,6 @@
     min-width: inherit;
     outline: none;
 	-moz-appearance: none;
-    resize: none;
 }
 
 .welcome {
@@ -166,4 +165,8 @@ nav li {
 
 .space {
     margin: 3px;
+}
+
+.hidden {
+    visibility: hidden;
 }

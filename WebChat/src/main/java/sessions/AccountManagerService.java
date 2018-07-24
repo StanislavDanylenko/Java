@@ -44,19 +44,25 @@ public class AccountManagerService implements AccountManager {
     }
 
     public HttpSession getHttpSession(String login) {
-        return userLoginToProfile.get(login).getHttpSession();
+        return (userLoginToProfile.get(login) != null)? userLoginToProfile.get(login).getHttpSession() : null;
     }
 
     public ChatWebSocket getSocketSession(String login) {
-        return userLoginToProfile.get(login).getWebSocket();
+        return (userLoginToProfile.get(login) != null)? userLoginToProfile.get(login).getWebSocket() : null;
     }
 
     public UsersDataSet getUserDataSet(String login) {
-        return userLoginToProfile.get(login).getUsersDataSet();
+        return (userLoginToProfile.get(login) != null)? userLoginToProfile.get(login).getUsersDataSet() : null;
     }
 
     public void deleteUser(String login) {
-        userLoginToProfile.remove(login);
+        AccountUser tempAccountUser = userLoginToProfile.get(login);
+        if (tempAccountUser != null) {
+            tempAccountUser.setUsersDataSet(null);
+            tempAccountUser.setHttpSession(null);
+            tempAccountUser.setWebSocket(null);
+            userLoginToProfile.remove(login);
+        }
     }
 
     public Set<String> getUsersLoginList() {

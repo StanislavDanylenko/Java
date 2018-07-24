@@ -166,3 +166,7 @@ nav li {
 .space {
     margin: 3px;
 }
+
+.hidden {
+    visibility: hidden;
+}

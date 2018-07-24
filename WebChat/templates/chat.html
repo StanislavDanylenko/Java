@@ -10,10 +10,12 @@
             ws = new WebSocket("ws://localhost:8080/chatInner");
             ws.onopen = function (event) {
                 ws.send(name);
+                var nameL = document.getElementById("hidden_text");
+                nameL.value = name;
             }
             ws.onmessage = function (event) {
-                var $textarea = document.getElementById("messages");
-                $textarea.value = $textarea.value + event.data + "\n";
+                var textarea = document.getElementById("messages");
+                textarea.value = textarea.value + event.data + "\n";
             }
             ws.onclose = function (event) {
                 ws.close();
@@ -47,7 +49,7 @@
     <a href="" class="logo">LOGO</a>
     <nav>
       <ul>
-          <li><a href="login.html">Log out</a></li>
+          <li><a href="login.html" onclick="document.getElementById('myform').submit(); return false;">log out</a></li>
       </ul>
     </nav>
   </div>
@@ -67,11 +69,12 @@
     <div id="chatbox">
         <textarea id="messages" rows="20" cols="50" readonly="readonly"></textarea>
     </div>
-
-
         <input name="usermsg" type="text" id="message" size="40"/>
-        <input type="button" name="submitmsg" value="Send..." onclick="sendMessage();"/>
+        <input type="button" name="submitmsg" value="Send" onclick="sendMessage();"/>
     </form>
 </div>
 </body>
+<form method='post' class='hidden' action="/logout" id="myform">
+    <input name="login" id="hidden_text" type="text" size="40"/>
+</form>
 </html>

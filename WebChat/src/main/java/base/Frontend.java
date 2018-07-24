@@ -61,10 +61,12 @@ public interface Frontend {
 
     private Long addUser(UsersDataSet profile, AccountManager accountManagerService, HttpServletRequest request) {
         String login = profile.getLogin();
+
         accountManagerService.addUser(login);
         accountManagerService.addHttpSession(login, request.getSession());
         accountManagerService.addUserDataSet(login, profile);
         return profile.getId();
+
     }
 
     private UsersDataSet getUserWithParams(DBService dbService, String login) throws DBException {

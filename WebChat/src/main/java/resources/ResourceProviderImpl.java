@@ -12,6 +12,8 @@ public class ResourceProviderImpl implements ResourceProvider {
 
     private List<Object> resources;
 
+
+
     public ResourceProviderImpl() {
         this.resources = new LinkedList<>();
     }

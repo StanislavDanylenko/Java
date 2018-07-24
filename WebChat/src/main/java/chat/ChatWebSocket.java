@@ -44,8 +44,8 @@ public class ChatWebSocket {
 
     @OnWebSocketClose
     public void onClose(int statusCode, String reason) {
+        accountManager.addSocketSession(login, null);
         sendMessage(login + " left the chat!");
-        accountManager.deleteUser(login);
         LOGGER.info("Disconnected: {}, {}, reason - {}, statusCode - {}", session, login, reason, statusCode);
     }
 
