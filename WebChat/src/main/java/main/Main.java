@@ -12,6 +12,7 @@ import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import servlets.ChatServlet;
 import servlets.SignInServlet;
 import servlets.SignUpServlet;
 import servlets.WebSocketChatServlet;
@@ -53,14 +54,14 @@ public class Main {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
 
         ResourceHandler resource_handler = new ResourceHandler();
-        resource_handler.setDirectoriesListed(true);
         resource_handler.setResourceBase("static_html");
 
         Server server = new Server(port);
 
         context.addServlet(new ServletHolder(signInServlet), SignInServlet.PAGE_URL);
         context.addServlet(new ServletHolder(signUpServlet), SignUpServlet.PAGE_URL);
-        context.addServlet(new ServletHolder(new WebSocketChatServlet()), "/chat");
+        context.addServlet(new ServletHolder(new ChatServlet()), ChatServlet.PAGE_URL);
+        context.addServlet(new ServletHolder(new WebSocketChatServlet()), WebSocketChatServlet.PAGE_URL);
 
         HandlerList handlers = new HandlerList();
         handlers.setHandlers(new Handler[]{resource_handler, context});

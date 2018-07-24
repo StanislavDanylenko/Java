@@ -1,0 +1,14 @@
+[07-24 11:29:55,705, 5718] main.Main Starting at http://127.0.0.1:8080
+[07-24 11:29:56,631, 6644] org.hibernate.Version HHH000412: Hibernate Core {5.2.5.Final}
+[07-24 11:29:56,632, 6645] org.hibernate.cfg.Environment HHH000206: hibernate.properties not found
+[07-24 11:29:56,792, 6805] org.hibernate.annotations.common.Version HCANN000001: Hibernate Commons Annotations {5.0.1.Final}
+[07-24 11:29:57,075, 7088] org.hibernate.orm.connections.pooling HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+[07-24 11:29:57,080, 7093] org.hibernate.orm.connections.pooling HHH10001005: using driver [org.h2.Driver] at URL [jdbc:h2:./h2db]
+[07-24 11:29:57,080, 7093] org.hibernate.orm.connections.pooling HHH10001001: Connection properties: {password=****, user=test}
+[07-24 11:29:57,081, 7094] org.hibernate.orm.connections.pooling HHH10001003: Autocommit mode: false
+[07-24 11:29:57,092, 7105] org.hibernate.engine.jdbc.connections.internal.DriverManagerConnectionProviderImpl HHH000115: Hibernate connection pool size: 20 (min=1)
+[07-24 11:29:57,971, 7984] org.hibernate.dialect.Dialect HHH000400: Using dialect: org.hibernate.dialect.H2Dialect
+[07-24 11:30:02,343, 12356] org.hibernate.orm.connections.access HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@10fbbdb] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+[07-24 11:30:02,506, 12519] org.hibernate.orm.connections.access HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@129bd55d] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+[07-24 11:30:02,639, 12652] org.hibernate.tool.schema.internal.SchemaCreatorImpl HHH000476: Executing import script 'org.hibernate.tool.schema.internal.exec.ScriptSourceInputNonExistentImpl@61f39bb'
+[07-24 11:30:07,540, 17553] main.Main Server started

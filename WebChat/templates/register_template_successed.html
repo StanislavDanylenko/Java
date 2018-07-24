@@ -6,8 +6,6 @@
     <link href='style.css' rel='stylesheet' type='text/css'>
 </head>
 
-<body>
-
 <header>
   <div class="container">
     <a href="/" class="logo">LOGO</a>
@@ -19,8 +17,11 @@
     </nav>
   </div>
 </header>
+    
+<body>
 
-<form method='post' class='reg-form' action="/signin">
+
+<form method='post' class='reg-form' action="/signup">
 
     <div class='form-row'>
         <label for='form_fname'>Login</label>
@@ -39,7 +40,7 @@
 </form>
 
 <div class="message success">
-    <p>${message}<a href="login.html">log in now!</a></p>
+    <p>${message}<a href="login.html"><span class="space"></span>log in now!</a></p>
 </div>
     
 </body>

@@ -7,9 +7,9 @@ import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 
 import javax.servlet.annotation.WebServlet;
 
-@WebServlet(name = "WebSocketChatServlet", urlPatterns = {"/chat"})
+@WebServlet(name = "WebSocketChatServlet", urlPatterns = {"/chatInner"})
 public class WebSocketChatServlet extends WebSocketServlet {
-    public static final String PAGE_URL = "/chat";
+    public static final String PAGE_URL = "/chatInner";
     private final static int LOGOUT_TIME = 10 * 60 * 1000;
     private final ChatService chatService;
 
