@@ -70,7 +70,7 @@ public class VFSImpl implements VFS {
         while (iter.hasNext()) {
             String str = iter.next();
             File file = new File(str);
-            if (isDirectory){
+            if (isDirectory) {
                 if (checkType(file)) {
                     list.add(str);
                 }

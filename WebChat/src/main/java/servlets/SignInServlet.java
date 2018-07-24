@@ -1,6 +1,6 @@
 package servlets;
 
-import base.Account;
+import base.AccountManager;
 import base.DBService;
 import base.Frontend;
 import exception.webException.GetUserException;
@@ -14,6 +14,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,16 +25,22 @@ public class SignInServlet extends HttpServlet implements Frontend {
     static private final Logger LOGGER = LogManager.getLogger(SignInServlet.class.getName());
     public static final String PAGE_URL = "/signin";
     private final DBService dbService;
-    private final Account accountService;
+    private final AccountManager accountManagerService;
 
     public SignInServlet(WebContext webContext) {
         this.dbService = webContext.get(DBService.class);
-        this.accountService = webContext.get(Account.class);
+        this.accountManagerService = webContext.get(AccountManager.class);
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
+        HttpSession session = request.getSession();
+        if (!session.isNew() && accountManagerService.getHttpSessoinList().contains(session)) {
+            request.getRequestDispatcher("/chat").forward(request, response);
+        } else {
+            LOGGER.error("No such session registered!");
+            response.getWriter().println(PageGenerator.printPage("static_html" + File.separator + "login.html"));
+        }
     }
 
     @Override
@@ -41,7 +49,7 @@ public class SignInServlet extends HttpServlet implements Frontend {
         String pass = request.getParameter("password");
         String message = null;
 
-        LOGGER.info("Name: {}", login);
+        LOGGER.info("Try to log in name: {}", login);
 
         if (!isEnterValid(login, pass)) {
             putAnswerInformation(UNAUTHORIZED, response);
@@ -49,12 +57,13 @@ public class SignInServlet extends HttpServlet implements Frontend {
         } else {
 
             try {
-                if (loginUser(dbService, login, pass, accountService, request) != null) {
+                if (loginUser(dbService, login, pass, accountManagerService, request) != null) {
                     putAnswerInformation(OK, response);
-                    message = "Authorized: " + login;
-                    LOGGER.info("User: {} success!", login);
+                   /* message = "Authorized: " + login;*/
+                    LOGGER.info("User: {} authorized!", login);
                     request.getSession().setAttribute("login", login);
-                    request.getRequestDispatcher("/chat").forward(request,response);
+                    request.getRequestDispatcher("/chat").forward(request, response);
+                    return;
                 }
             } catch (ValidationUserException e) {
                 putAnswerInformation(BAD_REQUEST, response);

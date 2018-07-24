@@ -1,6 +1,6 @@
 package main;
 
-import base.Account;
+import base.AccountManager;
 import base.Context;
 import base.DBService;
 import dbService.DBServiceImpl;
@@ -16,7 +16,7 @@ import servlets.ChatServlet;
 import servlets.SignInServlet;
 import servlets.SignUpServlet;
 import servlets.WebSocketChatServlet;
-import sessions.AccountService;
+import sessions.AccountManagerService;
 import sessions.WebContext;
 
 public class Main {
@@ -35,7 +35,7 @@ public class Main {
         LOGGER.info("Starting at http://127.0.0.1:" + portString);
 
         DBService dbService = new DBServiceImpl();
-        Account accountService = new AccountService();
+        AccountManager accountManagerService = new AccountManagerService();
 
         /*ResourceProviderImpl resourceProvider = new ResourceProviderImpl();
         resourceProvider.loadResources();
@@ -44,7 +44,7 @@ public class Main {
 
         Context webContext = new WebContext();
         webContext.add(DBService.class, dbService);
-        webContext.add(Account.class, accountService);
+        webContext.add(AccountManager.class, accountManagerService);
 
         dbService.printConnectInfo();
 
@@ -60,8 +60,8 @@ public class Main {
 
         context.addServlet(new ServletHolder(signInServlet), SignInServlet.PAGE_URL);
         context.addServlet(new ServletHolder(signUpServlet), SignUpServlet.PAGE_URL);
-        context.addServlet(new ServletHolder(new ChatServlet()), ChatServlet.PAGE_URL);
-        context.addServlet(new ServletHolder(new WebSocketChatServlet()), WebSocketChatServlet.PAGE_URL);
+        context.addServlet(new ServletHolder(new ChatServlet(accountManagerService)), ChatServlet.PAGE_URL);
+        context.addServlet(new ServletHolder(new WebSocketChatServlet(accountManagerService)), WebSocketChatServlet.PAGE_URL);
 
         HandlerList handlers = new HandlerList();
         handlers.setHandlers(new Handler[]{resource_handler, context});

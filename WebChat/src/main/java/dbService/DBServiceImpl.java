@@ -36,8 +36,8 @@ public class DBServiceImpl implements DBService {
     }
 
     public UsersDataSet getUser(long id) throws DBException {
-       TSessionQueryExecutor tSessionQueryExecutor = new TSessionQueryExecutor();
-       return tSessionQueryExecutor.getQuery(sessionFactory, dao -> dao.get(id));
+        TSessionQueryExecutor tSessionQueryExecutor = new TSessionQueryExecutor();
+        return tSessionQueryExecutor.getQuery(sessionFactory, dao -> dao.get(id));
     }
 
     public UsersDataSet getUser(String login) throws DBException {

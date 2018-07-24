@@ -1,6 +1,6 @@
 package servlets;
 
-import chat.ChatService;
+import base.AccountManager;
 import chat.ChatWebSocket;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
@@ -11,10 +11,10 @@ import javax.servlet.annotation.WebServlet;
 public class WebSocketChatServlet extends WebSocketServlet {
     public static final String PAGE_URL = "/chatInner";
     private final static int LOGOUT_TIME = 10 * 60 * 1000;
-    private final ChatService chatService;
+    private final AccountManager chatService;
 
-    public WebSocketChatServlet() {
-        this.chatService = new ChatService();
+    public WebSocketChatServlet(AccountManager chatService) {
+        this.chatService = chatService;
     }
 
     @Override

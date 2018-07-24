@@ -73,6 +73,6 @@ public class UsersDataSet implements Serializable { // Serializable Important to
         return "UserDataSet{" +
                 "id=" + id +
                 ", name='" + login + '\'' +
-                ", password ='" + password +'}';
+                ", password ='" + password + '}';
     }
 }

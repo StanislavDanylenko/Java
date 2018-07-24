@@ -9,14 +9,14 @@
         function init() {
             ws = new WebSocket("ws://localhost:8080/chatInner");
             ws.onopen = function (event) {
-
+                ws.send(name);
             }
             ws.onmessage = function (event) {
                 var $textarea = document.getElementById("messages");
                 $textarea.value = $textarea.value + event.data + "\n";
             }
             ws.onclose = function (event) {
-
+                ws.close();
             }
         };
 
@@ -47,7 +47,7 @@
     <a href="" class="logo">LOGO</a>
     <nav>
       <ul>
-          <li><a href="/logout">Log out</a></li>
+          <li><a href="login.html">Log out</a></li>
       </ul>
     </nav>
   </div>

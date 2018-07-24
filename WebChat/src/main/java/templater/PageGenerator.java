@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Map;
+import java.util.Scanner;
 
 public class PageGenerator {
     private static final String HTML_DIR = "templates";
@@ -31,6 +32,20 @@ public class PageGenerator {
             e.printStackTrace();
         }
         return stream.toString();
+    }
+
+    public static String printPage(String fileName) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            Scanner scanner = new Scanner(new File(fileName), "Cp1251");
+            while (scanner.hasNextLine()) {
+                sb.append(scanner.nextLine()).append(System.lineSeparator());
+            }
+            return sb.toString().trim();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        return sb.toString();
     }
 
     private PageGenerator() {

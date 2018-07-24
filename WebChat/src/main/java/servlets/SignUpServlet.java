@@ -1,11 +1,10 @@
 package servlets;
 
-import base.Account;
 import base.DBService;
 import base.Frontend;
+import exception.webException.GetUserException;
 import exception.webException.SuchUserAlreadyExistException;
 import exception.webException.UserException;
-import exception.webException.GetUserException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sessions.WebContext;
@@ -15,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,16 +23,14 @@ public class SignUpServlet extends HttpServlet implements Frontend {
     static private final Logger LOGGER = LogManager.getLogger(SignUpServlet.class.getName());
     public static final String PAGE_URL = "/signup";
     private final DBService dbService;
-    private final Account accountService;
 
     public SignUpServlet(WebContext webContext) {
         this.dbService = webContext.get(DBService.class);
-        this.accountService = webContext.get(Account.class);
     }
 
         @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
+        response.getWriter().println(PageGenerator.printPage("static_html" + File.separator + "register.html"));
     }
 
     @Override
@@ -54,7 +52,7 @@ public class SignUpServlet extends HttpServlet implements Frontend {
                 if (registerNewUser(dbService, login, pass) != null) {
                     putAnswerInformation(CREATED, response);
                     message = "registered";
-                    LOGGER.info("User: {} success!", login);
+                    LOGGER.info("User: {} registered!", login);
                     pageVariables.put("message", message);
                     response.getWriter().println(PageGenerator.instance().getPage("register_template_successed.html", pageVariables));
                     return;

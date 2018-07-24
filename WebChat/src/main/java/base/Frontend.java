@@ -19,7 +19,7 @@ public interface Frontend {
     int BAD_REQUEST = 400;
 
     default Long registerNewUser(DBService dbService, String login, String password)
-            throws UserException{
+            throws UserException {
         UsersDataSet existingUser = null;
         try {
             existingUser = getUserWithParams(dbService, login);
@@ -40,13 +40,13 @@ public interface Frontend {
         return newUserId;
     }
 
-    default Long loginUser(DBService dbService, String login, String password, Account accountService, HttpServletRequest request)
-            throws GetUserException, ValidationUserException{
+    default Long loginUser(DBService dbService, String login, String password, AccountManager accountManagerService, HttpServletRequest request)
+            throws GetUserException, ValidationUserException {
         UsersDataSet profile = validateUser(dbService, login, password);
-        return addUser(profile, accountService, request);
+        return addUser(profile, accountManagerService, request);
     }
 
-    private UsersDataSet validateUser(DBService dbService, String login, String password) throws GetUserException, ValidationUserException{
+    private UsersDataSet validateUser(DBService dbService, String login, String password) throws GetUserException, ValidationUserException {
         UsersDataSet profile = null;
         try {
             profile = dbService.getUser(login);
@@ -59,8 +59,11 @@ public interface Frontend {
         return profile;
     }
 
-    private Long addUser(UsersDataSet profile, Account accountService, HttpServletRequest request){
-        accountService.addSession(request.getSession().getId(), profile);
+    private Long addUser(UsersDataSet profile, AccountManager accountManagerService, HttpServletRequest request) {
+        String login = profile.getLogin();
+        accountManagerService.addUser(login);
+        accountManagerService.addHttpSession(login, request.getSession());
+        accountManagerService.addUserDataSet(login, profile);
         return profile.getId();
     }
 
@@ -69,7 +72,7 @@ public interface Frontend {
     }
 
     default boolean isEnterValid(String login, String password) {
-        if (login == null || password == null) {
+        if (login == null || password == null || "".equals(login) || "".equals(password)) {
             return false;
         }
         return true;
