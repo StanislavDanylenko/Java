@@ -1,8 +1,7 @@
-package base;
+package sessions;
 
 import chat.ChatWebSocket;
 import dbService.dataSets.UsersDataSet;
-import sessions.AccountUser;
 
 import javax.servlet.http.HttpSession;
 import java.util.Set;

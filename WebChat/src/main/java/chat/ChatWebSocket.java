@@ -1,6 +1,6 @@
 package chat;
 
-import base.AccountManager;
+import sessions.AccountManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.eclipse.jetty.websocket.api.Session;

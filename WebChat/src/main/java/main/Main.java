@@ -1,6 +1,7 @@
 package main;
 
-import base.AccountManager;
+import sessions.AccountManager;
+import sessions.AccountServiceControllerMBean;
 import base.Context;
 import base.DBService;
 import dbService.DBServiceImpl;
@@ -14,7 +15,12 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import servlets.*;
 import sessions.AccountManagerService;
+import sessions.AccountServiceController;
 import sessions.WebContext;
+
+import javax.management.MBeanServer;
+import javax.management.ObjectName;
+import java.lang.management.ManagementFactory;
 
 public class Main {
 
@@ -31,13 +37,13 @@ public class Main {
 
         LOGGER.info("Starting at http://127.0.0.1:" + portString);
 
-        /*ResourceProviderImpl resourceProvider = ResourceProviderImpl.getInstance();
-        resourceProvider.loadResources();*/
-        /*H2Configuration cfg = resourceProvider.getResource(H2Configuration.class);
-        System.out.println(cfg);*/
-
         DBService dbService = new DBServiceImpl();
         AccountManager accountManagerService = new AccountManagerService();
+
+        MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
+        ObjectName userStatistic = new ObjectName("Admin:type=AccountServiceController");
+        AccountServiceControllerMBean serverStatistics = new AccountServiceController(accountManagerService);
+        mbs.registerMBean(serverStatistics, userStatistic);
 
         Context webContext = new WebContext();
         webContext.add(DBService.class, dbService);
@@ -67,7 +73,6 @@ public class Main {
 
         server.start();
         LOGGER.info("Server started");
-        //System.out.println("Server started");
         server.join();
     }
 }

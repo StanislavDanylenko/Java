@@ -1,6 +1,6 @@
 package servlets;
 
-import base.AccountManager;
+import sessions.AccountManager;
 import base.DBService;
 import base.Frontend;
 import exception.webException.GetUserException;

@@ -1,6 +1,5 @@
 package sessions;
 
-import base.AccountManager;
 import chat.ChatWebSocket;
 import dbService.dataSets.UsersDataSet;
 

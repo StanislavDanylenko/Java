@@ -1,6 +1,6 @@
 package servlets;
 
-import base.AccountManager;
+import sessions.AccountManager;
 import chat.ChatWebSocket;
 import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
 import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
