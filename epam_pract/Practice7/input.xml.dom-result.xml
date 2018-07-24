@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Planes>
+    <Plane>
+        <Model>kjbk</Model>
+        <Origin>Sd</Origin>
+        <Chars>
+            <Type>Escort</Type>
+            <Places>1</Places>
+            <Ammunition>
+                <Rockets>10</Rockets>
+            </Ammunition>
+            <Radar>true</Radar>
+        </Chars>
+        <Parameters>
+            <Length unit="meter">10.0</Length>
+            <Width unit="meter">5.0</Width>
+            <Height unit="meter">3.0</Height>
+        </Parameters>
+        <Price unit="taller">10000.0</Price>
+    </Plane>
+    <Plane>
+        <Model>QQQ</Model>
+        <Origin>SSA</Origin>
+        <Chars>
+            <Type>Scout</Type>
+            <Places>1</Places>
+            <Radar>true</Radar>
+        </Chars>
+        <Parameters>
+            <Length unit="meter">12.4</Length>
+            <Width unit="meter">5.0</Width>
+            <Height unit="meter">2.0</Height>
+        </Parameters>
+        <Price unit="taller">1.0</Price>
+    </Plane>
+</Planes>

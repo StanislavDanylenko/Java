@@ -1,0 +1,29 @@
+USE epam;
+
+DROP TABLE IF EXISTS users_groups;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS grops;
+
+
+CREATE TABLE users(
+  id INT  AUTO_INCREMENT PRIMARY KEY,
+  login VARCHAR(20) UNIQUE NOT NULL
+);
+
+CREATE TABLE grops(
+  id INT  AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(20) UNIQUE NOT NULL
+);
+
+CREATE TABLE users_groups(
+  user_id INT NOT NULL,
+  grop_id INT NOT NULL,
+  PRIMARY KEY (user_id , grop_id),
+  FOREIGN KEY (grop_id) REFERENCES grops(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+INSERT INTO users(id, login) VALUES (DEFAULT, 'ivanov');
+INSERT INTO grops(id, name) VALUES (DEFAULT, 'teamA');
+
+GRANT ALL ON epam.* TO 'testuser'@'localhost';

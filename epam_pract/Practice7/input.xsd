@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  XML schema -->
+
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://nure.ua/danylenko/entity"
+            xmlns:tns="http://nure.ua/danylenko/entity">
+
+    <xsd:element name="Planes">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="Plane"
+                             type="tns:ParentPlane" maxOccurs="unbounded"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+    <xsd:complexType name="ParentPlane" abstract="true"/>
+
+    <xsd:complexType name="NotScoutPlane">
+        <xsd:complexContent>
+            <xsd:extension base="tns:ParentPlane">
+                <xsd:sequence>
+                    <xsd:element name="Model" type="xsd:string"/>
+                    <xsd:element name="Origin" type="tns:origin"/>
+                    <xsd:element name="Chars" type="tns:chars"/>
+                    <xsd:element name="Parameters" type="tns:parameters"/>
+                    <xsd:element name="Price" type="tns:price"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="ScoutPlane">
+        <xsd:complexContent>
+            <xsd:extension base="tns:ParentPlane">
+                <xsd:sequence>
+                    <xsd:element name="Model" type="xsd:string" />
+                    <xsd:element name="Origin" type="tns:origin"/>
+                    <xsd:element name="Chars" type="tns:charsScout"/>
+                    <xsd:element name="Parameters" type="tns:parameters"/>
+                    <xsd:element name="Price" type="tns:price"/>
+                </xsd:sequence>
+            </xsd:extension>
+        </xsd:complexContent>
+    </xsd:complexType>
+
+    <xsd:simpleType name="origin">
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[A-Z]([A-Z]|[a-z])+"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="type">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Aircraft support"/>
+            <xsd:enumeration value="Escort"/>
+            <xsd:enumeration value="Fighter"/>
+            <xsd:enumeration value="Interceptor"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="typeScout">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="Scout"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="places">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="1"/>
+            <xsd:maxInclusive value="2"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="rockets">
+        <xsd:restriction base="xsd:integer">
+            <xsd:minInclusive value="0"/>
+            <xsd:maxInclusive value="10"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+    <xsd:simpleType name="radar">
+            <xsd:restriction base="xsd:boolean"/>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="range">
+        <xsd:restriction base="xsd:double"/>
+    </xsd:simpleType>
+
+    <xsd:complexType name="unitAttribute">
+        <xsd:simpleContent>
+            <xsd:extension base="tns:range">
+                <xsd:attribute name="unit" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:complexType name="ammunition">
+        <xsd:sequence>
+            <xsd:element name="Rockets" type="tns:rockets"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="chars">
+        <xsd:sequence>
+            <xsd:element name="Type" type="tns:type" />
+            <xsd:element name="Places" type="tns:places"/>
+            <xsd:element name="Ammunition" type="tns:ammunition"/>
+            <xsd:element name="Radar" type="tns:radar" default="false"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="charsScout">
+        <xsd:sequence>
+            <xsd:element name="Type" type="tns:typeScout"/>
+            <xsd:element name="Places" type="tns:places"/>
+            <xsd:element name="Radar" type="tns:radar" default="false"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="parameters">
+        <xsd:sequence>
+            <xsd:element name="Length" type="tns:unitAttribute" />
+            <xsd:element name="Width" type="tns:unitAttribute"/>
+            <xsd:element name="Height" type="tns:unitAttribute"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="price" mixed="true">
+        <xsd:simpleContent>
+            <xsd:extension base="tns:range">
+                <xsd:attribute name="unit" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+</xsd:schema>

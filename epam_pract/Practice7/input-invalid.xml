@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  Input XML document. This XML is valid against Test.xsd XML schema-->
+
+<st3:Planes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns:st3="http://nure.ua/danylenko/entity"
+          xsi:schemaLocation="http://nure.ua/danylenko/entity input.xsd">
+
+    <Plane xsi:type="st3:NotScoutPlane">
+        <Model>kjbk</Model>\
+        <Model>INVALID</Model>\
+        <Origin>Sd</Origin>
+        <Chars>
+            <Type>Escort</Type>
+            <Places>1</Places>
+            <Ammunition>
+                <Rockets>10</Rockets>
+            </Ammunition>
+            <Radar>true</Radar>
+        </Chars>
+        <Parameters>
+            <Length unit="meter">10</Length>
+            <Width unit="meter">5</Width>
+            <Height unit="meter">3</Height>
+        </Parameters>
+        <Price unit="taller">10000</Price>
+    </Plane>
+
+    <Plane xsi:type="st3:ScoutPlane">
+        <Model>QQQ</Model>
+        <Origin>SSA</Origin>
+        <Chars>
+            <Type>Scout</Type>
+            <Places>2</Places>
+            <Radar>true</Radar>
+        </Chars>
+        <Parameters>
+            <Length unit="meter">12.4</Length>
+            <Width unit="meter">5</Width>
+            <Height unit="meter">2</Height>
+        </Parameters>
+        <Price unit="taller">1</Price>
+    </Plane>
+
+</st3:Planes>
