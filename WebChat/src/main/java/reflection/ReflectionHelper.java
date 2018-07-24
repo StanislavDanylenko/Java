@@ -1,13 +1,21 @@
 package reflection;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.lang.reflect.Field;
 
 public class ReflectionHelper {
+
+    private static final Logger LOGGER = LogManager.getLogger(ReflectionHelper.class.getName());
+
     public static Object createInstance(String className) {
         try {
             return Class.forName(className).newInstance();
-        } catch (IllegalArgumentException | SecurityException | InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+        } catch (IllegalArgumentException | SecurityException | InstantiationException | IllegalAccessException |
+                ClassNotFoundException e) {
             e.printStackTrace();
+            LOGGER.error("Can`t parse config: {}", className);
         }
         return null;
     }
@@ -52,6 +60,7 @@ public class ReflectionHelper {
             field.setAccessible(false);
         } catch (SecurityException | NoSuchFieldException | IllegalArgumentException | IllegalAccessException e) {
             e.printStackTrace();
+            LOGGER.error("Can`t parse field: {}", fieldName);
         }
     }
 }

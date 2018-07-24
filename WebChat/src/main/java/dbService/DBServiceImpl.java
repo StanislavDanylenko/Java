@@ -32,6 +32,16 @@ public class DBServiceImpl implements DBService {
         configuration.setProperty("hibernate.connection.password", "test");
         configuration.setProperty("hibernate.show_sql", HIBERNATE_SHOW_SQL);
         configuration.setProperty("hibernate.hbm2ddl.auto", HIBERNATE_HBM2DDL_AUTO);
+
+        /*ResourceProviderImpl resourceProvider = ResourceProviderImpl.getInstance();
+        H2Configuration config = resourceProvider.getResource(H2Configuration.class);*/
+        /*configuration.setProperty("hibernate.dialect", config.getDialect());
+        configuration.setProperty("hibernate.connection.driver_class", config.getConnectionDriverClass());
+        configuration.setProperty("hibernate.connection.url", config.getConnectionURL());
+        configuration.setProperty("hibernate.connection.username", config.getConnectionUsername());
+        configuration.setProperty("hibernate.connection.password", config.getConnectionPassword());
+        configuration.setProperty("hibernate.show_sql", config.getShowSql());
+        configuration.setProperty("hibernate.hbm2ddl.auto", config.getHbm2ddlAuto());*/
         return configuration;
     }
 

@@ -3,13 +3,13 @@ package templater;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import vfs.VFSImpl;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Map;
-import java.util.Scanner;
 
 public class PageGenerator {
     private static final String HTML_DIR = "templates";
@@ -35,7 +35,7 @@ public class PageGenerator {
     }
 
     public static String printPage(String fileName) {
-        StringBuilder sb = new StringBuilder();
+       /* StringBuilder sb = new StringBuilder();
         try {
             Scanner scanner = new Scanner(new File(fileName), "Cp1251");
             while (scanner.hasNextLine()) {
@@ -44,8 +44,10 @@ public class PageGenerator {
             return sb.toString().trim();
         } catch (IOException ex) {
             ex.printStackTrace();
-        }
-        return sb.toString();
+        }*/
+        VFSImpl vfs = new VFSImpl();
+        vfs.getUTF8Text(fileName);
+        return /*sb.toString();*/ vfs.getUTF8Text(fileName);
     }
 
     private PageGenerator() {

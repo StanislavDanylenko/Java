@@ -10,7 +10,10 @@ public class VFSImpl implements VFS {
 
     public VFSImpl(String root) {
         this.root = root;
+    }
 
+    public VFSImpl() {
+        this.root = ".";
     }
 
     @Override

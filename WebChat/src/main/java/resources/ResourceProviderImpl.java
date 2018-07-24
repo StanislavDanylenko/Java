@@ -10,12 +10,21 @@ import java.util.List;
 
 public class ResourceProviderImpl implements ResourceProvider {
 
-    private List<Object> resources;
+    private static List<Object> resources;
+    private static List<String> nameResoures;
 
+    private static ResourceProviderImpl instance;
 
-
-    public ResourceProviderImpl() {
+    private ResourceProviderImpl() {
         this.resources = new LinkedList<>();
+        nameResoures.add("H2Configuration");
+    }
+
+    public static ResourceProviderImpl getInstance() {
+        if (instance == null) {
+            instance = new ResourceProviderImpl();
+        }
+        return instance;
     }
 
     @Override

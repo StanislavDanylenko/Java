@@ -31,13 +31,13 @@ public class Main {
 
         LOGGER.info("Starting at http://127.0.0.1:" + portString);
 
+        /*ResourceProviderImpl resourceProvider = ResourceProviderImpl.getInstance();
+        resourceProvider.loadResources();*/
+        /*H2Configuration cfg = resourceProvider.getResource(H2Configuration.class);
+        System.out.println(cfg);*/
+
         DBService dbService = new DBServiceImpl();
         AccountManager accountManagerService = new AccountManagerService();
-
-        /*ResourceProviderImpl resourceProvider = new ResourceProviderImpl();
-        resourceProvider.loadResources();
-        H2Configuration cfg = resourceProvider.getResource(H2Configuration.class);
-        System.out.println(cfg);*/
 
         Context webContext = new WebContext();
         webContext.add(DBService.class, dbService);
