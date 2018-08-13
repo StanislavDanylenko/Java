@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="347.0" prefWidth="337.0" styleClass="body" stylesheets="@style/main.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stanislav.danylenko.chat.client.controller.StartController">
+   <children>
+      <Pane prefHeight="58.0" prefWidth="337.0" styleClass="head" stylesheets="@style/main.css">
+         <children>
+            <Label layoutX="14.0" layoutY="13.0" styleClass="head-text" stylesheets="@style/main.css" text="YourChat">
+               <font>
+                  <Font name="Consolas Bold" size="27.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Label layoutX="128.0" layoutY="91.0" styleClass="texts" stylesheets="@style/main.css" text="Вход">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <Hyperlink fx:id="linkRegistration" layoutX="157.0" layoutY="312.0" onMouseClicked="#gotoRegistration" stylesheets="@style/main.css" text="Зарегистрироваться">
+         <styleClass>
+            <String fx:value="down-text" />
+            <String fx:value="hyperlink" />
+         </styleClass>
+      </Hyperlink>
+      <Label layoutX="46.0" layoutY="315.0" stylesheets="@style/main.css" text="Еще нет аккаунта?">
+         <styleClass>
+            <String fx:value="down-text" />
+            <String fx:value="texts" />
+         </styleClass>
+      </Label>
+      <Label fx:id="labelMessage" layoutX="32.0" layoutY="234.0" />
+      <JFXPasswordField fx:id="textFieldPassword" labelFloat="true" layoutX="28.0" layoutY="200.0" prefHeight="26.0" prefWidth="273.0" promptText="Пароль" styleClass="fields-text" stylesheets="@style/main.css">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font>
+      </JFXPasswordField>
+      <JFXTextField fx:id="textFieldLogin" labelFloat="true" layoutX="28.0" layoutY="148.0" prefHeight="26.0" prefWidth="273.0" promptText="Логин" styleClass="fields-text" stylesheets="@style/main.css">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton fx:id="btnEnter" layoutX="28.0" layoutY="259.0" onMouseClicked="#gotoChat" prefHeight="31.0" prefWidth="273.0" styleClass="buttons" stylesheets="@style/main.css" text="Войти" />
+   </children>
+</AnchorPane>

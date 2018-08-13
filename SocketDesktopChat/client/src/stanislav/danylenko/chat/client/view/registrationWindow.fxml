@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="429.0" maxWidth="337.0" minHeight="429.0" minWidth="337.0" prefHeight="429.0" prefWidth="337.0" styleClass="body" stylesheets="@style/main.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stanislav.danylenko.chat.client.controller.RegistrationController">
+   <children>
+      <Pane prefHeight="58.0" prefWidth="337.0" styleClass="head" stylesheets="@style/main.css">
+         <children>
+            <Label layoutX="102.0" layoutY="14.0" styleClass="head-text" stylesheets="@style/main.css" text="YourChat">
+               <font>
+                  <Font name="Consolas Bold" size="27.0" />
+               </font>
+            </Label>
+            <JFXButton layoutX="-4.0" layoutY="-7.0" onMouseClicked="#gotoStart" prefHeight="65.0" prefWidth="58.0" stylesheets="@style/main.css" text="&lt;">
+               <font>
+                  <Font name="System Bold" size="44.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="buttons" />
+                  <String fx:value="nopadding" />
+               </styleClass>
+            </JFXButton>
+         </children>
+      </Pane>
+      <Label layoutX="76.0" layoutY="66.0" styleClass="texts" stylesheets="@style/main.css" text="Регистрация">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelMessage" layoutX="28.0" layoutY="345.0" prefHeight="17.0" prefWidth="273.0" />
+      <JFXPasswordField fx:id="textFieldPAssword" labelFloat="true" layoutX="28.0" layoutY="200.0" onKeyReleased="#checkTypedText" prefHeight="26.0" prefWidth="273.0" promptText="Пароль" styleClass="fields-text" stylesheets="@style/main.css">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font>
+      </JFXPasswordField>
+      <JFXTextField fx:id="textFieldLogin" labelFloat="true" layoutX="28.0" layoutY="148.0" prefHeight="26.0" prefWidth="273.0" promptText="Логин" styleClass="fields-text" stylesheets="@style/main.css">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font>
+      </JFXTextField>
+      <JFXButton fx:id="btnRegistration" layoutX="28.0" layoutY="376.0" onMouseClicked="#registerUser" prefHeight="31.0" prefWidth="273.0" styleClass="buttons" stylesheets="@style/main.css" text="Зарегитстрироваться" />
+      <JFXPasswordField fx:id="textFieldSecondPassword" labelFloat="true" layoutX="28.0" layoutY="252.0" onKeyTyped="#checkSecondPassword" prefHeight="26.0" prefWidth="273.0" promptText="Пароль еще раз" styleClass="fields-text" stylesheets="@style/main.css">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font>
+      </JFXPasswordField>
+      <JFXTextField fx:id="textFieldEmail" labelFloat="true" layoutX="28.0" layoutY="311.0" onKeyTyped="#checkEmail" prefHeight="26.0" prefWidth="273.0" promptText="E-mail" styleClass="fields-text" stylesheets="@style/main.css">
+         <font>
+            <Font name="Consolas" size="14.0" />
+         </font>
+      </JFXTextField>
+   </children>
+</AnchorPane>

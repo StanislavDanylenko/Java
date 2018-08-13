@@ -17,7 +17,7 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
     private static final int HEIGHT = 400;
 
 
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -54,7 +54,7 @@ public class ClientWindow extends JFrame implements ActionListener, TCPConnectio
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e) { // переписать в chatController
         String msg = fieldInput.getText();
         if ("".equals(msg)) {
             return;
