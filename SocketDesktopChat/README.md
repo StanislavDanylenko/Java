@@ -1,1 +1,1 @@
-Swing -> JavaFX and authorization coming soon
+Fixed bugs coming soon
