@@ -67,29 +67,22 @@ public class RegistrationController implements Initializable {
 
     @FXML
     public void registerUser(MouseEvent mouseEvent) {
-        String login = textFieldLogin.getText();
-        String password = textFieldPAssword.getText();
-        String secondPassword = textFieldSecondPassword.getText();
-        String email = textFieldEmail.getText();
-        labelMessage.setText("");
-        if ("".equals(login) || !password.equals(secondPassword)
-                || "".equals(password) || "".equals(email) || !isCorrectEmail(email)) {
-            labelMessage.setText("Данные указаны не верно!");
-        } else {
-            /*try {*/
-                //DBService.addUser(new UserDataSet(login, password, email));
+        TCPConnection connection = application.getConnection();
+        if (connection != null) {
+            String login = textFieldLogin.getText();
+            String password = textFieldPAssword.getText();
+            String secondPassword = textFieldSecondPassword.getText();
+            String email = textFieldEmail.getText();
+            labelMessage.setText("");
+            if ("".equals(login) || !password.equals(secondPassword)
+                    || "".equals(password) || "".equals(email) || !isCorrectEmail(email)) {
+                labelMessage.setText("Данные указаны не верно!");
+            } else {
                 AbstractMessage message = new RegistrationMessage(login, password, email);
                 String gsonMessage = application.getGson().toJson(message);
-                TCPConnection connection = application.getConnection();
                 connection.sendString(gsonMessage);
-                ///
-                ///       много кода
-                ///
-                /*labelMessage.setText("Успешная регистрация!");*/
-            } /*catch (DBException e) {
-                labelMessage.setText("Произошла ошибка регистрации");
-            }*/
-        /*}*/
+            }
+        }
     }
 
     @FXML

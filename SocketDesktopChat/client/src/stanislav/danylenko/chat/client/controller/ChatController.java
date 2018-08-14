@@ -80,20 +80,24 @@ public class ChatController implements Initializable {
         AbstractMessage aMessage = new LogoutMessage(user.getLogin(), user.getPassword());
         String gsonMessage = application.getGson().toJson(aMessage);
         TCPConnection connection = application.getConnection();
-        connection.sendString(gsonMessage);
+        if (connection != null) {
+            connection.sendString(gsonMessage);
+        }
     }
 
     @FXML
     void sendMessage(ActionEvent event) {
-        String message = textFieldMessage.getText();
-        if (!"".equals(message)){
-            timeStamp = new SimpleDateFormat("[dd.MM.yyyy HH:mm] ").format(Calendar.getInstance().getTime());
-            message = timeStamp + application.getLoggedUser().getLogin() + ": " + message;
-            AbstractMessage aMessage = new TextMessage(message);
-            String gsonMessage = application.getGson().toJson(aMessage);
-            TCPConnection connection = application.getConnection();
-            connection.sendString(gsonMessage);
-            textFieldMessage.setText("");
+        TCPConnection connection = application.getConnection();
+        if (connection != null) {
+            String message = textFieldMessage.getText();
+            if (!"".equals(message)) {
+                timeStamp = new SimpleDateFormat("[dd.MM.yyyy HH:mm] ").format(Calendar.getInstance().getTime());
+                message = timeStamp + application.getLoggedUser().getLogin() + ": " + message;
+                AbstractMessage aMessage = new TextMessage(message);
+                String gsonMessage = application.getGson().toJson(aMessage);
+                connection.sendString(gsonMessage);
+                textFieldMessage.setText("");
+            }
         }
     }
 }

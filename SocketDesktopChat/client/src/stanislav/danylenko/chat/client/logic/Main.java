@@ -157,9 +157,12 @@ public class Main extends Application implements TCPConnectionListener {
     }
 
     @Override
-    public void onReceiveString(TCPConnection tcpConnection, String value) {
+    public void onReceiveString(TCPConnection tcpConnection, String value) throws IOException {
         System.out.println(value);
         AbstractMessage message = gson.fromJson(value, AbstractMessage.class);
+       if (message == null) {
+            throw new IOException();
+        }
         String operation = message.getOperation();
         switch (operation) {
             case "registration":
@@ -221,7 +224,16 @@ public class Main extends Application implements TCPConnectionListener {
 
     @Override
     public void onDisconnect(TCPConnection tcpConnection) {
-        printMessage("Connection close...");
+        System.out.println("Client disconnected" + tcpConnection);
+        Platform.runLater(() -> {
+            try {
+                startController.setLabelMessage("Потеряно соединение с сервером!");
+                connection = null;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            restoreConnection();
+        });
     }
 
     @Override
@@ -239,6 +251,32 @@ public class Main extends Application implements TCPConnectionListener {
 
     public void printSystemInfo(String msg) {
         System.out.println(msg);
+    }
+
+    public void restoreConnection() {
+        Thread restoreThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (connection == null) {
+                    try {
+                        Thread.sleep(1000);
+                        connection = new TCPConnection(Main.this, IP_ADR, PORT);
+                        Thread.sleep(1000);
+                        Platform.runLater(() -> {
+                            try {
+                                startController.setLabelMessage("Соединение восстановлено!");
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        });
+                        return;
+                    } catch (InterruptedException | IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        restoreThread.start();
     }
 
 }

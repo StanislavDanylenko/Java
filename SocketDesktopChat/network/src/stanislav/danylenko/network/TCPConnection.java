@@ -8,7 +8,7 @@ public class TCPConnection {
 
     private final Socket socket;
     private final Thread rxThread;
-    private final TCPConnectionListener eventListener;
+    private TCPConnectionListener eventListener;
     private final BufferedReader in;
     private final BufferedWriter out;
 
@@ -53,6 +53,7 @@ public class TCPConnection {
         rxThread.interrupt();
         try {
             socket.close();
+            eventListener = null;
         } catch (IOException e) {
             eventListener.onException(TCPConnection.this, e);
         }

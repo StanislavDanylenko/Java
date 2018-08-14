@@ -2,13 +2,13 @@ package stanislav.danylenko.chat.server.controller;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
-import stanislav.danylenko.chat.server.ChatServer;
+import javafx.scene.input.MouseEvent;
+import stanislav.danylenko.chat.server.MainChatServer;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,19 +33,16 @@ public class MainWindowController implements Initializable {
     @FXML
     private Label labelState;
 
-    private ChatServer application;
+    private MainChatServer application;
     private Integer port;
 
-    public void setApp(ChatServer application){
+    public void setApp(MainChatServer application){
         this.application = application;
     }
 
     @FXML
-    void StopServer(ActionEvent event) {
+    void StopServer(MouseEvent event) {
         application.stopServer();
-        textFieldPort.setDisable(false);
-        btnStart.setDisable(false);
-        btnStop.setDisable(true);
     }
 
     @FXML
@@ -69,7 +66,7 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    void startServer(ActionEvent event) {
+    void startServer(MouseEvent event) {
         if (port != null) {
            application.startServer(port);
         }
@@ -82,6 +79,12 @@ public class MainWindowController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         textFieldPort.requestFocus();
         btnStart.setDisable(true);
+        btnStop.setDisable(true);
+    }
+
+    public void stopControlsConfiguratrion() {
+        textFieldPort.setDisable(false);
+        btnStart.setDisable(false);
         btnStop.setDisable(true);
     }
 }

@@ -54,16 +54,18 @@ public class StartController implements Initializable {
 
     @FXML
     void gotoChat(MouseEvent event) {
-        labelMessage.setText("");
-        String login = textFieldLogin.getText().trim();
-        String password = textFieldPassword.getText().trim();
-        if ("".equals(login) || "".equals(password)) {
-            labelMessage.setText("Ошибка, поля заполнены не правильно!");
-        } else {
-            AbstractMessage message = new AuthorizationMessage(login, password);
-            String gsonMessage = application.getGson().toJson(message);
-            TCPConnection connection = application.getConnection();
-            connection.sendString(gsonMessage);
+        TCPConnection connection = application.getConnection();
+        if (connection != null) {
+            labelMessage.setText("");
+            String login = textFieldLogin.getText().trim();
+            String password = textFieldPassword.getText().trim();
+            if ("".equals(login) || "".equals(password)) {
+                labelMessage.setText("Ошибка, поля заполнены не правильно!");
+            } else {
+                AbstractMessage message = new AuthorizationMessage(login, password);
+                String gsonMessage = application.getGson().toJson(message);
+                connection.sendString(gsonMessage);
+            }
         }
     }
 

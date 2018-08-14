@@ -1,15 +1,10 @@
 package stanislav.danylenko.chat.server;
 
 import com.google.gson.Gson;
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import stanislav.danylenko.chat.server.controller.MainWindowController;
 import stanislav.danylenko.chat.server.logic.dbService.DBException;
 import stanislav.danylenko.chat.server.logic.dbService.DBService;
 import stanislav.danylenko.chat.server.logic.dbService.UserDataSet;
+import stanislav.danylenko.chat.server.logic.message.*;
 import stanislav.danylenko.network.TCPConnection;
 import stanislav.danylenko.network.TCPConnectionListener;
 
@@ -18,34 +13,18 @@ import java.net.ServerSocket;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import stanislav.danylenko.chat.server.logic.message.*;
-
-public class ChatServer extends Application implements TCPConnectionListener {
+public class ChatServer extends Thread implements TCPConnectionListener {
 
     Gson gson = new Gson();
     private String timeStamp;
-    private static ChatServer instance;
-    private MainWindowController mainWindowController;
     private ServerSocket serverSocket;
-
     private final Map<TCPConnection, String> connections = new HashMap<>();
+    private final int port;
 
-    private ChatServer(int port) {
-        System.out.println("Server running...");
-        try {
-            serverSocket = new ServerSocket(8189);
-            while (true) {
-                try {
-                    new TCPConnection(this, serverSocket.accept());
-                } catch (IOException e) {
-                    System.out.println("TCPConnection exception: " + e);
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public ChatServer(int port) {
+        this.port = port;
     }
-    
+
     @Override
     public synchronized void onConnectionReady(TCPConnection tcpConnection) {
         connections.put(tcpConnection, null);
@@ -101,7 +80,7 @@ public class ChatServer extends Application implements TCPConnectionListener {
     @Override
     public synchronized void onDisconnect(TCPConnection tcpConnection) {
         connections.remove(tcpConnection);
-        System.out.println("Client connected: " + tcpConnection);
+        System.out.println("Client disconnected: " + tcpConnection);
     }
 
     @Override
@@ -123,45 +102,40 @@ public class ChatServer extends Application implements TCPConnectionListener {
         return message;
     }
 
-
-    public static void main(String[] args) {
-        /*instance = new ChatServer();*/
-        launch(args);
-    }
-
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/mainWindow.fxml"));
-        Parent root = loader.load();
-        mainWindowController = loader.getController();
-        primaryStage.setTitle(MainWindowController.TITLE);
-        primaryStage.setScene(new Scene(root,
-                MainWindowController.MINIMUM_WINDOW_WIDTH,
-                MainWindowController.MINIMUM_WINDOW_HEIGHT));
-        primaryStage.setResizable(false);
-        mainWindowController.setApp(this);
-        primaryStage.show();
-    }
-
-    public void startServer(int port) {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                instance = new ChatServer(port);
+    public void run() {
+        System.out.println("Server running...");
+        try {
+            serverSocket = new ServerSocket(port);
+            while (!serverSocket.isClosed()) {
+                try {
+                    new TCPConnection(this, serverSocket.accept());
+                } catch (IOException e) {
+                    System.out.println("TCPConnection exception: " + e);
+                    System.out.println("Server stopped");
+                    return;
+                }
             }
-        });
-        thread.start();
-    }
-
-    public ChatServer() {
+        } catch (IOException e) {
+            //throw new RuntimeException(e);
+            System.out.println(e);
+            return;
+        }
     }
 
     public void stopServer() {
         try {
             serverSocket.close();
-            serverSocket = null;
+            int size = connections.size();
+            List<TCPConnection> connectionSet = new ArrayList<>(connections.keySet());
+            for (int i = 0; i < size; i++) {
+                connectionSet.get(i).disconnect();
+                connectionSet.set(i, null);
+            }
+            connections.clear();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        serverSocket = null;
     }
 }
