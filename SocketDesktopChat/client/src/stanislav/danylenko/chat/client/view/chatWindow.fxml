@@ -22,8 +22,8 @@
          <bottom>
             <AnchorPane prefHeight="59.0" prefWidth="500.0" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton fx:id="btnSend" defaultButton="true" layoutX="365.0" layoutY="8.0" onAction="#sendMessage" prefHeight="31.0" prefWidth="123.0" styleClass="buttons" stylesheets="@style/main.css" text="Отправить" AnchorPane.rightAnchor="14.0" />
-                  <JFXTextField fx:id="textFieldMessage" labelFloat="true" layoutX="14.0" layoutY="9.0" prefHeight="30.0" prefWidth="332.0" promptText="Введите сообщение" styleClass="fields-text" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="153.0" />
+                  <JFXButton fx:id="btnSend" defaultButton="true" layoutX="365.0" layoutY="8.0" onAction="#sendMessage" prefHeight="31.0" prefWidth="123.0" styleClass="buttons" stylesheets="@style/main.css" text="%chat.btnSend" AnchorPane.rightAnchor="14.0" />
+                  <JFXTextField fx:id="textFieldMessage" labelFloat="true" layoutX="14.0" layoutY="9.0" prefHeight="30.0" prefWidth="332.0" promptText="%chat.enterMessage" styleClass="fields-text" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="153.0" />
                   <Label fx:id="labelMessage" layoutX="14.0" layoutY="43.0" />
                </children>
             </AnchorPane>
@@ -31,14 +31,14 @@
          <top>
             <BorderPane prefHeight="44.0" prefWidth="500.0" styleClass="head" BorderPane.alignment="CENTER">
                <left>
-                  <JFXButton fx:id="btnProfile" prefHeight="31.0" prefWidth="72.0" styleClass="buttons" stylesheets="@style/main.css" text="Профиль" BorderPane.alignment="CENTER">
+                  <JFXButton fx:id="btnProfile" prefHeight="31.0" prefWidth="72.0" styleClass="buttons" stylesheets="@style/main.css" text="%chat.profile" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </BorderPane.margin>
                   </JFXButton>
                </left>
                <right>
-                  <JFXButton fx:id="btnExit" cancelButton="true" onAction="#gotoLogin" prefHeight="31.0" prefWidth="72.0" styleClass="buttons" stylesheets="@style/main.css" text="Выйти" BorderPane.alignment="CENTER">
+                  <JFXButton fx:id="btnExit" cancelButton="true" onAction="#gotoLogin" prefHeight="31.0" prefWidth="72.0" styleClass="buttons" stylesheets="@style/main.css" text="%chat.exit" BorderPane.alignment="CENTER">
                      <BorderPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </BorderPane.margin>

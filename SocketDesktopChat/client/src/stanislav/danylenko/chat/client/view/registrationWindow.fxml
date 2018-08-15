@@ -29,24 +29,24 @@
             </JFXButton>
          </children>
       </Pane>
-      <Label layoutX="76.0" layoutY="66.0" styleClass="texts" stylesheets="@style/main.css" text="Регистрация">
+      <Label layoutX="76.0" layoutY="66.0" styleClass="texts" stylesheets="@style/main.css" text="%register.label">
          <font>
             <Font size="31.0" />
          </font>
       </Label>
       <Label fx:id="labelMessage" layoutX="28.0" layoutY="345.0" prefHeight="17.0" prefWidth="273.0" />
-      <JFXPasswordField fx:id="textFieldPAssword" labelFloat="true" layoutX="28.0" layoutY="200.0" onKeyReleased="#checkTypedText" prefHeight="26.0" prefWidth="273.0" promptText="Пароль" styleClass="fields-text" stylesheets="@style/main.css">
+      <JFXPasswordField fx:id="textFieldPAssword" labelFloat="true" layoutX="28.0" layoutY="200.0" onKeyReleased="#checkTypedText" prefHeight="26.0" prefWidth="273.0" promptText="%register.password" styleClass="fields-text" stylesheets="@style/main.css">
          <font>
             <Font name="Consolas" size="14.0" />
          </font>
       </JFXPasswordField>
-      <JFXTextField fx:id="textFieldLogin" labelFloat="true" layoutX="28.0" layoutY="148.0" prefHeight="26.0" prefWidth="273.0" promptText="Логин" styleClass="fields-text" stylesheets="@style/main.css">
+      <JFXTextField fx:id="textFieldLogin" labelFloat="true" layoutX="28.0" layoutY="148.0" prefHeight="26.0" prefWidth="273.0" promptText="%register.login" styleClass="fields-text" stylesheets="@style/main.css">
          <font>
             <Font name="Consolas" size="14.0" />
          </font>
       </JFXTextField>
-      <JFXButton fx:id="btnRegistration" layoutX="28.0" layoutY="376.0" onMouseClicked="#registerUser" prefHeight="31.0" prefWidth="273.0" styleClass="buttons" stylesheets="@style/main.css" text="Зарегитстрироваться" />
-      <JFXPasswordField fx:id="textFieldSecondPassword" labelFloat="true" layoutX="28.0" layoutY="252.0" onKeyTyped="#checkSecondPassword" prefHeight="26.0" prefWidth="273.0" promptText="Пароль еще раз" styleClass="fields-text" stylesheets="@style/main.css">
+      <JFXButton fx:id="btnRegistration" layoutX="28.0" layoutY="376.0" onMouseClicked="#registerUser" prefHeight="31.0" prefWidth="273.0" styleClass="buttons" stylesheets="@style/main.css" text="%register.registerButton" />
+      <JFXPasswordField fx:id="textFieldSecondPassword" labelFloat="true" layoutX="28.0" layoutY="252.0" onKeyTyped="#checkSecondPassword" prefHeight="26.0" prefWidth="273.0" promptText="%register.secondPassword" styleClass="fields-text" stylesheets="@style/main.css">
          <font>
             <Font name="Consolas" size="14.0" />
          </font>

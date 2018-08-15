@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
 
 public class ChatController implements Initializable {
 
-    public final static String TITLE = "Чат";
+    public static String TITLE = "Чат";
     public final static double MINIMUM_WINDOW_WIDTH = 500d;
     public final static double MINIMUM_WINDOW_HEIGHT = 500d;
 
@@ -56,6 +56,7 @@ public class ChatController implements Initializable {
     private JFXButton btnExit;
 
     private Main application;
+    ResourceBundle resourceBundle;
 
     public void addMessage(String message) {
         messages.add(message);
@@ -72,6 +73,8 @@ public class ChatController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         messages.addListener((ListChangeListener<String>) c -> listViewMessages.setItems(messages));
+        resourceBundle = resources;
+        TITLE = resourceBundle.getString("chat.headline");
     }
 
     @FXML

@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 public class RegistrationController implements Initializable {
 
-    public final static String TITLE = "Регистрация";
+    public static String TITLE = "Регистрация";
     public final static double MINIMUM_WINDOW_WIDTH = 337d;
     public final static double MINIMUM_WINDOW_HEIGHT = 435d;
 
@@ -43,6 +43,7 @@ public class RegistrationController implements Initializable {
     private JFXTextField textFieldEmail;
 
     private Main application;
+    ResourceBundle resourceBundle;
 
     public void setApp(Main application){
         this.application = application;
@@ -50,7 +51,8 @@ public class RegistrationController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        resourceBundle = resources;
+        TITLE = resourceBundle.getString("register.headline");
     }
 
     @FXML

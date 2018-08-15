@@ -69,3 +69,7 @@
 .head-text {
     -fx-text-fill: #fff;
 }
+
+.imageView:hover {
+    -fx-cursor: hand;
+}
