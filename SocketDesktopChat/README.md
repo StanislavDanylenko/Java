@@ -1,1 +1,1 @@
-Fixed bugs coming soon
+fix bugs and i18n errors, refactoring coming soon
