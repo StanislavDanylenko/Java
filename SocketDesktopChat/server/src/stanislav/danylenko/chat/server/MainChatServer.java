@@ -36,11 +36,15 @@ public class MainChatServer extends Application {
         serverThread.start();
     }
 
+    public boolean isServerStarted() {
+        return serverThread != null && !serverThread.isInterrupted();
+    }
+
     public void stopServer() {
         serverThread.interrupt();
         serverThread.stopServer();
         serverThread = null;
-        mainWindowController.stopControlsConfiguratrion();
+        mainWindowController.stopControlsConfiguration();
     }
 
 }

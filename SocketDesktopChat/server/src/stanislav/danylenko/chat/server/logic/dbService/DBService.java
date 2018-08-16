@@ -1,11 +1,14 @@
 package stanislav.danylenko.chat.server.logic.dbService;
 
+import stanislav.danylenko.chat.server.logic.message.MessageCode;
+
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.SQLException;
+import java.util.logging.ErrorManager;
 
 public class DBService {
 
@@ -32,7 +35,7 @@ public class DBService {
             dao.insertUser(user);
         } catch (SQLException e) {
             if (e instanceof java.sql.SQLIntegrityConstraintViolationException) {
-                throw new DBException("User with this login already registered!");
+                throw new DBException("" + MessageCode.LOGIN_ACCESS_ERROR);
             }
             throw new DBException("Registration error!");
         }

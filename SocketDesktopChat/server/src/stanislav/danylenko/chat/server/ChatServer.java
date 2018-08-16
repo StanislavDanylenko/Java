@@ -40,9 +40,9 @@ public class ChatServer extends Thread implements TCPConnectionListener {
                 RegistrationMessage rmessage = gson.fromJson(value, RegistrationMessage.class);
                 try {
                     DBService.addUser(rmessage.getUser());
-                    rmessage = setResultAndMessage(rmessage, true, "Success registration!");
+                    rmessage = setResultAndMessage(rmessage, true, MessageCode.REGISTERED);
                 } catch (DBException e) {
-                    setResultAndMessage(rmessage, false, e.getMessage());
+                    setResultAndMessage(rmessage, false, Integer.parseInt(e.getMessage()));
                     e.printStackTrace();
                 }
                 tcpConnection.sendString(gson.toJson(rmessage));
@@ -52,13 +52,13 @@ public class ChatServer extends Thread implements TCPConnectionListener {
                 UserDataSet user = DBService.getUserByLogin(amessage.getUser().getLogin());
                 if (user != null && user.getPassword().equals(amessage.getUser().getPassword())) {
                     amessage.setUser(user);
-                    amessage = setResultAndMessage(amessage, true, "Success!");
+                    amessage = setResultAndMessage(amessage, true, MessageCode.AUTHORIZIED);
                     connections.put(tcpConnection, user.getLogin());
                     tcpConnection.sendString(gson.toJson(amessage));
                     timeStamp = new SimpleDateFormat("[dd.MM.yyyy HH:mm] ").format(Calendar.getInstance().getTime());
                     sendAllConnections(new TextMessage(timeStamp + user.getLogin() + " connected!"));
                 } else {
-                    amessage = setResultAndMessage(amessage, false, "Authorization error!");
+                    amessage = setResultAndMessage(amessage, false, MessageCode.AUTHORIZATION_ERROR);
                     tcpConnection.sendString(gson.toJson(amessage));
                 }
                 break;
@@ -96,9 +96,9 @@ public class ChatServer extends Thread implements TCPConnectionListener {
         }
     }
 
-    private <T extends AbstractMessage> T setResultAndMessage(T message, boolean isSuccess, String value) {
+    private <T extends AbstractMessage> T setResultAndMessage(T message, boolean isSuccess, int value) {
         message.setSuccess(isSuccess);
-        message.setMessage(value);
+        message.setMessageCode(value);
         return message;
     }
 

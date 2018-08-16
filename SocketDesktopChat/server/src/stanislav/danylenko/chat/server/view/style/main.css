@@ -24,3 +24,7 @@
     -fx-background-color: #ffffff;
 }
 
+.state {
+    -fx-font-size: 10px;
+}
+

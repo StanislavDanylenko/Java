@@ -196,6 +196,7 @@ public class Main extends Application implements TCPConnectionListener {
         loadResource("registrationWindow.fxml");
         loadResource("chatWindow.fxml");
         loadResource("settingsWindow.fxml");
+        ErrorHalper.loadDictionary(resourceBundle);
     }
 
     private void customScene(String title, boolean resizable) {
@@ -211,7 +212,7 @@ public class Main extends Application implements TCPConnectionListener {
 
     @Override
     public void onConnectionReady(TCPConnection tcpConnection) {
-        printMessage("Connection ready...");
+        printMessage(ErrorHalper.getMessage(MessageCode.CONNECTION_READY));
     }
 
     @Override
@@ -227,7 +228,7 @@ public class Main extends Application implements TCPConnectionListener {
                 RegistrationMessage rmessage = gson.fromJson(value, RegistrationMessage.class);
                 Platform.runLater(() -> {
                     try {
-                        registrationController.setLabelMessage(rmessage.getMessage());
+                        registrationController.setLabelMessage(ErrorHalper.getMessage(rmessage.getMessageCode()));
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -248,7 +249,7 @@ public class Main extends Application implements TCPConnectionListener {
                 } else {
                     Platform.runLater(() -> {
                         try {
-                            startController.setLabelMessage(amessage.getMessage());
+                            startController.setLabelMessage(ErrorHalper.getMessage(amessage.getMessageCode()));
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -282,10 +283,10 @@ public class Main extends Application implements TCPConnectionListener {
 
     @Override
     public void onDisconnect(TCPConnection tcpConnection) {
-        System.out.println("Client disconnected" + tcpConnection);
+        System.out.println(ErrorHalper.getMessage(MessageCode.CLIENT_DISCONNECT) + tcpConnection);
         Platform.runLater(() -> {
             try {
-                startController.setLabelMessage("Потеряно соединение с сервером!");
+                startController.setLabelMessage(ErrorHalper.getMessage(MessageCode.CONNECTION_LOST));
                 connection = null;
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -300,7 +301,7 @@ public class Main extends Application implements TCPConnectionListener {
 
     @Override
     public void onException(TCPConnection tcpConnection, Exception e) {
-        printMessage("Connection exception: " + e);
+        printMessage(ErrorHalper.getMessage(MessageCode.CONNECTION_EXCEPTION) + e);
     }
 
     private synchronized void printMessage(String msg) {
@@ -326,7 +327,7 @@ public class Main extends Application implements TCPConnectionListener {
                         Thread.sleep(1000);
                         Platform.runLater(() -> {
                             try {
-                                startController.setLabelMessage("Соединение восстановлено!");
+                                startController.setLabelMessage(ErrorHalper.getMessage(MessageCode.CONNECTION_RESET));
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -334,7 +335,7 @@ public class Main extends Application implements TCPConnectionListener {
                         return;
                     } catch (InterruptedException | IOException e) {
                         //e.printStackTrace();
-                        System.out.println("Сервер недоступен!");
+                        System.out.println(ErrorHalper.getMessage(MessageCode.CONNECTION_RESET));
                     }
                 }
             }
@@ -346,7 +347,7 @@ public class Main extends Application implements TCPConnectionListener {
         try {
             connection = new TCPConnection(listener, ip, port);
         } catch (IOException e) {
-            startController.setLabelMessage("Невозможно подключиться к серверу!");
+            startController.setLabelMessage(ErrorHalper.getMessage(MessageCode.CONNECTION_ERROR));
         }
     }
 
@@ -357,7 +358,7 @@ public class Main extends Application implements TCPConnectionListener {
         try {
             connection = new TCPConnection(this, ip, port);
         } catch (IOException e) {
-            startController.setLabelMessage("Невозможно подключиться к серверу!");
+            startController.setLabelMessage(ErrorHalper.getMessage(MessageCode.CONNECTION_ERROR) + e);
         }
     }
 

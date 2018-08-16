@@ -70,9 +70,12 @@ public class MainWindowController implements Initializable {
         if (port != null) {
            application.startServer(port);
         }
-        textFieldPort.setDisable(true);
-        btnStart.setDisable(true);
-        btnStop.setDisable(false);
+        if (application.isServerStarted()) {
+            textFieldPort.setDisable(true);
+            btnStart.setDisable(true);
+            btnStop.setDisable(false);
+            labelState.setText("Started");
+        }
     }
 
     @Override
@@ -80,11 +83,13 @@ public class MainWindowController implements Initializable {
         textFieldPort.requestFocus();
         btnStart.setDisable(true);
         btnStop.setDisable(true);
+        labelState.setText("Waiting");
     }
 
-    public void stopControlsConfiguratrion() {
+    public void stopControlsConfiguration() {
         textFieldPort.setDisable(false);
         btnStart.setDisable(false);
         btnStop.setDisable(true);
+        labelState.setText("Stopped");
     }
 }

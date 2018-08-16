@@ -3,7 +3,7 @@ package stanislav.danylenko.chat.client.logic.message;
 public class AbstractMessage {
     protected String operation = "operation";
     private boolean isSuccess;
-    private String message;
+    private int messageCode;
 
     public boolean isSuccess() {
         return isSuccess;
@@ -13,15 +13,15 @@ public class AbstractMessage {
         isSuccess = success;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public int getMessageCode() {
+        return messageCode;
+    }
+
+    public void setMessageCode(int messageCode) {
+        this.messageCode = messageCode;
     }
 
     public String getOperation() {
         return operation;
-    }
-
-    public String getMessage() {
-        return message;
     }
 }
