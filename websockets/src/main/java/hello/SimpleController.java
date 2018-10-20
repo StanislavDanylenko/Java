@@ -12,7 +12,7 @@ public class SimpleController {
     @Autowired
     private SimpMessagingTemplate template;
 
-    @RequestMapping("/sendMessage")
+    @RequestMapping("/sendMessageOld")
     public Greeting getMessage(@RequestBody HelloMessage message) {
         template.convertAndSend("/topic/greetings", new Greeting("Hello " + message.getName()));
         return null;
