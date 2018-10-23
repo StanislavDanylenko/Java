@@ -1,22 +1,24 @@
 package hello;
 
+import java.util.List;
+
 public class BytesMessage {
 
-    private byte[] des_message;
+    private int[] message;
 
     public BytesMessage() {
     }
 
-    public BytesMessage(byte[] des_message) {
-        this.des_message = des_message;
+    public BytesMessage(int[] message) {
+        this.message = message;
     }
 
-    public byte[] getMessage() {
-        return des_message;
+    public int[] getMessage() {
+        return message;
     }
 
-    public void setMessage(byte[] des_message) {
-        this.des_message = des_message;
+    public void setMessage(int[] message) {
+        this.message = message;
     }
 
 }
