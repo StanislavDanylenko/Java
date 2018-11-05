@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.Scanner;
 
 public class ConfigurationHelper {
-    private static final String FILE_NAME = "client/src/stanislav/danylenko/chat/client/config/settings.json";
+    private static final String FILE_NAME = "src/stanislav/danylenko/chat/client/config/settings.json";
     private static final String ENCODING = "UTF-8";
 
     private static Gson gson = new Gson();

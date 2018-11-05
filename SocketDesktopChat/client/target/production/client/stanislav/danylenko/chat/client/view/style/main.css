@@ -1,0 +1,75 @@
+* {
+    -fx-font-family: Consolas;
+}
+
+.fields {
+    -fx-background-color: #fff;
+    -fx-border-color: #bcbcbc;
+}
+
+.buttons {
+    -fx-color: #fff;
+    -fx-background-color: #6496c8;
+    -fx-border: none;
+    -fx-text-fill: #fff;
+    -fx-cursor: hand;
+}
+
+.buttons:hover {
+    -fx-background-color: #346392;
+}
+
+.head {
+    -fx-background-color: #6496c8;
+}
+
+.body {
+    -fx-background-color: #ffffff;
+}
+
+.texts {
+    -fx-font-size: 31px;
+    -fx-text-fill: black;
+}
+
+.down-text {
+    -fx-font-size: 12px;
+    -fx-opacity: 0.34;
+
+}
+
+.hyperlink {
+    -fx-border-color: white;
+    -fx-text-fill: #346392;
+}
+
+.hyperlink:visited {
+    -fx-font-size: 12px;
+    -fx-text-fill: #346392;
+}
+
+.down-text:selected {
+    -fx-border-color: white;
+}
+
+.down-text:hover {
+    -fx-opacity: 1;
+}
+
+.fields-text {
+    -fx-font-size: 14px;
+}
+
+.nopadding {
+    -fx-padding: 0;
+    -fx-font-size: 44;
+    -fx-font-weight: bold;
+}
+
+.head-text {
+    -fx-text-fill: #fff;
+}
+
+.imageView:hover {
+    -fx-cursor: hand;
+}

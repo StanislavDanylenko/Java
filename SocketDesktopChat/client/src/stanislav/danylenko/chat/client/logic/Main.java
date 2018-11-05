@@ -16,10 +16,12 @@ import javafx.stage.Stage;
 import stanislav.danylenko.chat.client.logic.config.Configuration;
 import stanislav.danylenko.chat.client.logic.config.ConfigurationHelper;
 import stanislav.danylenko.chat.client.logic.message.*;
+import stanislav.danylenko.encripting.EncryptionHandler;
 import stanislav.danylenko.network.TCPConnection;
 import stanislav.danylenko.network.TCPConnectionListener;
 
 import java.io.IOException;
+import java.security.PublicKey;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -31,6 +33,7 @@ public class Main extends Application implements TCPConnectionListener {
     private final String VIEW_PATH = "../view/";
     private Configuration configuration;
     private boolean needRestoreServer = true;
+    private EncryptionHandler encryptionHandler = new EncryptionHandler();
 
     private Stage mainStage;
 
@@ -64,6 +67,10 @@ public class Main extends Application implements TCPConnectionListener {
 
     public Gson getGson() {
         return gson;
+    }
+
+    public EncryptionHandler getEncryptionHandler() {
+        return encryptionHandler;
     }
 
     public void setLoggedUser(UserDataSet loggedUser) {
@@ -238,7 +245,13 @@ public class Main extends Application implements TCPConnectionListener {
                 AuthorizationMessage amessage = gson.fromJson(value, AuthorizationMessage.class);
                 if (amessage.isSuccess()) {
                     startController.cleanFields();
-                    loggedUser = amessage.getUser();
+
+                    UserDataSet user = amessage.getUser();
+                    loggedUser.copyUser(user);
+                    PublicKey key = encryptionHandler.getPublicKeyFromBytes(amessage.getPublicKey());
+                    loggedUser.setReceivedPublicKey(key);
+                    encryptionHandler.generateCommonSecretKey(loggedUser);
+
                     Platform.runLater(() -> {
                         try {
                             gotoChat();
@@ -260,7 +273,8 @@ public class Main extends Application implements TCPConnectionListener {
                 TextMessage tmessage = gson.fromJson(value, TextMessage.class);
                 Platform.runLater(() -> {
                     try {
-                        chatController.addMessage(tmessage.getValue());
+                        byte[] decryptedBytes = encryptionHandler.decryptMessage(tmessage.getValue(), loggedUser);
+                        chatController.addMessage(new String(decryptedBytes));
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }

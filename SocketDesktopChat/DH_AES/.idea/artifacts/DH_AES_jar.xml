@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="DH_AES:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/DH_AES_jar</output-path>
+    <root id="archive" name="DH_AES.jar">
+      <element id="module-output" name="DH_AES" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,30 @@
+* {
+    -fx-font-family: Consolas;
+    -fx-font-size: 14px;
+}
+
+.fields {
+    -fx-background-color: #fff;
+    -fx-font-size: 14px;
+}
+
+.buttons {
+    -fx-color: #fff;
+    -fx-background-color: #6496c8;
+    -fx-border: none;
+    -fx-text-fill: #fff;
+    -fx-cursor: hand;
+}
+
+.buttons:hover {
+    -fx-background-color: #346392;
+}
+
+.body {
+    -fx-background-color: #ffffff;
+}
+
+.state {
+    -fx-font-size: 10px;
+}
+

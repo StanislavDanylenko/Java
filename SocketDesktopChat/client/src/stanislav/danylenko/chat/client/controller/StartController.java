@@ -12,8 +12,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import stanislav.danylenko.chat.client.logic.Main;
+import stanislav.danylenko.chat.client.logic.UserDataSet;
 import stanislav.danylenko.chat.client.logic.message.AbstractMessage;
 import stanislav.danylenko.chat.client.logic.message.AuthorizationMessage;
+import stanislav.danylenko.encripting.EncryptionHandler;
 import stanislav.danylenko.network.TCPConnection;
 
 import java.io.File;
@@ -25,7 +27,7 @@ import java.util.ResourceBundle;
 public class StartController implements Initializable {
 
     public static String TITLE;
-    private static final String PATH = "client/src/stanislav/danylenko/chat/client/view/icons/";
+    private static final String PATH = "src/stanislav/danylenko/chat/client/view/icons/";
     public final static double MINIMUM_WINDOW_WIDTH = 337d;
     public final static double MINIMUM_WINDOW_HEIGHT = 347d;
 
@@ -72,7 +74,16 @@ public class StartController implements Initializable {
             if ("".equals(login) || "".equals(password)) {
                 labelMessage.setText("Ошибка, поля заполнены не правильно!");
             } else {
-                AbstractMessage message = new AuthorizationMessage(login, password);
+                AuthorizationMessage amedssage = new AuthorizationMessage(login, password);
+
+                UserDataSet userDataSet = new UserDataSet();
+                EncryptionHandler encryptionHandler = application.getEncryptionHandler();
+                encryptionHandler.generateKeys(userDataSet);
+                application.setLoggedUser(userDataSet);
+
+                amedssage.setPublicKey(userDataSet.getPublicKey());
+
+                AbstractMessage message = amedssage;
                 String gsonMessage = application.getGson().toJson(message);
                 connection.sendString(gsonMessage);
             }

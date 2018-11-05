@@ -20,6 +20,7 @@ import stanislav.danylenko.chat.client.logic.message.AbstractMessage;
 import stanislav.danylenko.chat.client.logic.message.AuthorizationMessage;
 import stanislav.danylenko.chat.client.logic.message.LogoutMessage;
 import stanislav.danylenko.chat.client.logic.message.TextMessage;
+import stanislav.danylenko.encripting.EncryptionHandler;
 import stanislav.danylenko.network.TCPConnection;
 
 import java.net.URL;
@@ -96,7 +97,10 @@ public class ChatController implements Initializable {
             if (!"".equals(message)) {
                 timeStamp = new SimpleDateFormat("[dd.MM.yyyy HH:mm] ").format(Calendar.getInstance().getTime());
                 message = timeStamp + application.getLoggedUser().getLogin() + ": " + message;
-                AbstractMessage aMessage = new TextMessage(message);
+                EncryptionHandler encryptionHandler = application.getEncryptionHandler();
+                UserDataSet userDataSet = application.getLoggedUser();
+                byte[] encrypted = encryptionHandler.encryptMessage(message, userDataSet);
+                AbstractMessage aMessage = new TextMessage(encrypted);
                 String gsonMessage = application.getGson().toJson(aMessage);
                 connection.sendString(gsonMessage);
                 textFieldMessage.setText("");

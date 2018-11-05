@@ -5,21 +5,25 @@ import stanislav.danylenko.chat.server.logic.dbService.DBException;
 import stanislav.danylenko.chat.server.logic.dbService.DBService;
 import stanislav.danylenko.chat.server.logic.dbService.UserDataSet;
 import stanislav.danylenko.chat.server.logic.message.*;
+import stanislav.danylenko.encripting.EncryptionHandler;
 import stanislav.danylenko.network.TCPConnection;
 import stanislav.danylenko.network.TCPConnectionListener;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+
+import java.security.PublicKey;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ChatServer extends Thread implements TCPConnectionListener {
 
-    Gson gson = new Gson();
+    private Gson gson = new Gson();
     private String timeStamp;
     private ServerSocket serverSocket;
-    private final Map<TCPConnection, String> connections = new HashMap<>();
+    private final Map<TCPConnection, UserDataSet> connections = new HashMap<>();
     private final int port;
+    private EncryptionHandler encodingHelper = new EncryptionHandler();
 
     public ChatServer(int port) {
         this.port = port;
@@ -49,14 +53,23 @@ public class ChatServer extends Thread implements TCPConnectionListener {
                 break;
             case "authorization":
                 AuthorizationMessage amessage = gson.fromJson(value, AuthorizationMessage.class);
+
                 UserDataSet user = DBService.getUserByLogin(amessage.getUser().getLogin());
                 if (user != null && user.getPassword().equals(amessage.getUser().getPassword())) {
+
+                    PublicKey publicKey = encodingHelper.getPublicKeyFromBytes(amessage.getPublicKey());
+                    user.setReceivedPublicKey(publicKey);
+                    encodingHelper.generateKeys(user);
+                    encodingHelper.generateCommonSecretKey(user);
+
                     amessage.setUser(user);
+                    amessage.setPublicKey(user.getPublicKey());
+
                     amessage = setResultAndMessage(amessage, true, MessageCode.AUTHORIZIED);
-                    connections.put(tcpConnection, user.getLogin());
+                    connections.put(tcpConnection, user);
                     tcpConnection.sendString(gson.toJson(amessage));
                     timeStamp = new SimpleDateFormat("[dd.MM.yyyy HH:mm] ").format(Calendar.getInstance().getTime());
-                    sendAllConnections(new TextMessage(timeStamp + user.getLogin() + " connected!"));
+                    sendAllConnections(new TextMessage((timeStamp + user.getLogin() + " connected!").getBytes()));
                 } else {
                     amessage = setResultAndMessage(amessage, false, MessageCode.AUTHORIZATION_ERROR);
                     tcpConnection.sendString(gson.toJson(amessage));
@@ -64,15 +77,18 @@ public class ChatServer extends Thread implements TCPConnectionListener {
                 break;
             case "text":
                 TextMessage tmessage = gson.fromJson(value, TextMessage.class);
-                sendAllConnections(tmessage);
+                byte[] text = tmessage.getValue();
+                byte[] decryptedText = encodingHelper.decryptMessage(text, connections.get(tcpConnection));
+//                byte[] encryptedText = encodingHelper.encryptMessage(new String(decryptedText), connections.get(tcpConnection));
+                sendAllConnections(new TextMessage(decryptedText));
                 break;
             case "logout":
                 LogoutMessage lmessage = gson.fromJson(value, LogoutMessage.class);
-                connections.put(tcpConnection, null);
+                connections.remove(tcpConnection);
                 lmessage.setSuccess(true);
                 tcpConnection.sendString(gson.toJson(lmessage));
                 timeStamp = new SimpleDateFormat("[dd.MM.yyyy HH:mm] ").format(Calendar.getInstance().getTime());
-                sendAllConnections(new TextMessage(timeStamp + lmessage.getUser().getLogin() + " disconnected!"));
+                sendAllConnections(new TextMessage((timeStamp + lmessage.getUser().getLogin() + " disconnected!").getBytes()));
                 break;
         }
     }
@@ -89,9 +105,19 @@ public class ChatServer extends Thread implements TCPConnectionListener {
     }
 
     private synchronized void sendAllConnections(TextMessage message) {
-        System.out.println(message.getValue());
+        System.out.println("DECRYPTED:");
+        System.out.println(Arrays.toString(message.getValue()));
+        System.out.println(new String(message.getValue()));
+
         Set<TCPConnection> users = connections.keySet();
+        String str = new String(message.getValue());
         for (TCPConnection connection : users) {
+
+            System.out.println("ENCRYPTED:");
+            byte[] text = encodingHelper.encryptMessage(str, connections.get(connection));
+            System.out.println(Arrays.toString(text));
+            System.out.println(new String(text));
+            message.setValue(text);
             connection.sendString(gson.toJson(message));
         }
     }

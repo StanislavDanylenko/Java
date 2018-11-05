@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="258.0" prefWidth="447.0" styleClass="body" stylesheets="@style/main.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="stanislav.danylenko.chat.client.controller.SettingsController">
+   <children>
+      <JFXButton fx:id="btnCancel" cancelButton="true" layoutX="193.0" layoutY="211.0" onAction="#cancelSettings" prefHeight="27.0" prefWidth="100.0" styleClass="buttons" stylesheets="@style/main.css" text="%settings.cancel" />
+      <JFXButton fx:id="btnOK" defaultButton="true" layoutX="307.0" layoutY="210.0" onAction="#acceptSettings" prefHeight="27.0" prefWidth="100.0" styleClass="buttons" stylesheets="@style/main.css" text="OK" />
+      <HBox layoutX="29.0" layoutY="25.0" prefHeight="176.0" prefWidth="389.0">
+         <children>
+            <VBox prefHeight="230.0" prefWidth="201.0">
+               <children>
+                  <Label styleClass="fields-text" stylesheets="@style/main.css" text="%settings.IP">
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="20.0" right="30.0" top="20.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="fields-text" stylesheets="@style/main.css" text="%settings.port">
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="20.0" right="30.0" top="20.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="fields-text" stylesheets="@style/main.css" text="%settings.language">
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="20.0" right="30.0" top="20.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox prefHeight="176.0" prefWidth="219.0">
+               <children>
+                  <HBox prefHeight="40.0" prefWidth="204.0">
+                     <children>
+                        <JFXTextField fx:id="textFieldIP1" onKeyReleased="#checkIP1" prefHeight="22.0" prefWidth="46.0" styleClass="fields-text" stylesheets="@style/main.css">
+                           <HBox.margin>
+                              <Insets bottom="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="textFieldIP2" onKeyReleased="#checkIP2" prefHeight="22.0" prefWidth="48.0" styleClass="fields-text" stylesheets="@style/main.css">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="textFieldIP3" onKeyReleased="#checkIP3" prefHeight="22.0" prefWidth="50.0" styleClass="fields-text" stylesheets="@style/main.css">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <JFXTextField fx:id="textFieldIP4" onKeyReleased="#checkIP4" prefHeight="22.0" prefWidth="44.0" styleClass="fields-text" stylesheets="@style/main.css">
+                           <HBox.margin>
+                              <Insets bottom="5.0" left="5.0" top="5.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets top="8.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <JFXTextField fx:id="textFieldPort" onKeyReleased="#checkPort" prefHeight="22.0" prefWidth="112.0" styleClass="fields-text" stylesheets="@style/main.css">
+                     <VBox.margin>
+                        <Insets top="17.0" />
+                     </VBox.margin>
+                  </JFXTextField>
+                  <JFXComboBox fx:id="cmbBoxLang" onMouseClicked="#showLanguages" prefHeight="22.0" prefWidth="209.0" styleClass="fields-text" stylesheets="@style/main.css">
+                     <VBox.margin>
+                        <Insets top="25.0" />
+                     </VBox.margin>
+                  </JFXComboBox>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
